@@ -1,8 +1,7 @@
 
 const toggleDropdown = function (isHidden, dropdownItems){
     
-    const itemsArray = Array.from(dropdownItems);
-    console.log(itemsArray);
+    const itemsArray = Array.from(dropdownItems);;
     itemsArray.forEach(item =>{
         if(!isHidden){
             item.style.display= "none";
