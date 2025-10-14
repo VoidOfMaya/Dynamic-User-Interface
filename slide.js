@@ -27,9 +27,10 @@ const sliderElement = function(slid){
     })
     slid.appendChild(photoDisplay);
 
-    showImg(photolist, 1);
+    showImg(photolist, 0);
     const dots = dotSelector(photolist);
     slid.appendChild(dots);
+    AutoSlider(photolist);
 
 
 }
@@ -42,6 +43,7 @@ const dotSelector = function(photos){
         dot.innerText = "o";
         dot.style.display= "inline";
         dot.style.padding = "10px";
+
         dot.addEventListener('mouseover', ()=>{
             dot.innerText = "O";
         });
@@ -56,6 +58,16 @@ const dotSelector = function(photos){
     })
     return slidBottom
 }
+const AutoSlider= function (photos,selected){
+    if(selected == undefined){
+        selected = 0;
+    }
+    setInterval(()=>{
+        selected = (selected + 1) %photos.length;
+        showImg(photos, selected);
+    }, 5000);
+}
+
 const showImg = function (photos, selected){
 
     console.log(photos);

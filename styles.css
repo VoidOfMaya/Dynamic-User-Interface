@@ -2,3 +2,13 @@ html, body {
   height: 100%;
   margin: 0;
 }
+.dot {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: rgb(51, 51, 51);
+}
+
+.dot-active {
+  color: rgb(221, 221, 221);
+  font-weight: bold;
+}
