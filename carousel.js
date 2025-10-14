@@ -3,6 +3,12 @@ import{ sliderElement}from "./slide.js"
 const carousel = function (){
     
     const container = document.querySelector('.img-carousel');
+    const arrowA = document.createElement('div');
+    const arrowB = document.createElement('div');
+    const slid = document.createElement('div');
+    
+    slid.id = "slider-preview";
+
     container.style.height = "100%";
     container.style.backgroundColor = "gray";
     container.style.gridArea = "carousel";
@@ -10,9 +16,6 @@ const carousel = function (){
     container.style.gridTemplateColumns =  "1fr 8fr 1fr";
     container.style.gridTemplateAreas = `"sideA slid sideB`
 
-    const arrowA = document.createElement('div');
-    const arrowB = document.createElement('div');
-    const slid = document.createElement('div');
 
     slid.style.gridArea = "slid";
     arrowA.style.gridArea = "sideA";
@@ -26,6 +29,9 @@ const carousel = function (){
 
     arrowB.style.textAlign = "center";
     arrowB.style.alignContent = "center";
+
+    
+    sliderElement(slid);
 
     container.appendChild(slid);
     container.appendChild(arrowA);
