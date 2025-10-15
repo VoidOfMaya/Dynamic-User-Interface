@@ -1,6 +1,8 @@
 
 const sliderElement = function(slid){
 
+    const currentState = { index: 0 };
+
     slid.style.display = "grid";
     slid.style.gridTemplateRows = "9fr 1fr";
     slid.style.gridTemplateAreas = `"view"
@@ -27,22 +29,44 @@ const sliderElement = function(slid){
     })
     slid.appendChild(photoDisplay);
 
-    showImg(photolist, 0);
-    const dots = dotSelector(photolist);
-    slid.appendChild(dots);
-    AutoSlider(photolist);
+    
+    const dotsCreate= dotSelector(photolist, currentState);
+    slid.appendChild(dotsCreate.dotContainer);
 
+    AutoSlider(photolist, currentState , dotsCreate.dots);
+    slidOnArrow(photolist, currentState, dotsCreate.dots );
+    showImgs(photolist, currentState.index, dotsCreate.dots);
 
 }
-const dotSelector = function(photos){
+const slidOnArrow = function (photos, currentState, dots){
+    const leftArrow = document.getElementById('arrow-A');
+    const rightArrow = document.querySelector('#arrow-B');
+
+    rightArrow.addEventListener('click',()=>{
+        currentState.index = (currentState.index + 1) % photos.length;
+        showImgs(photos, currentState.index, dots);
+    })    
+    leftArrow.addEventListener('click',()=>{
+        currentState.index = (currentState.index -1 +photos.length) % photos.length;
+        showImgs(photos, currentState.index, dots);
+
+    });
+};
+const dotSelector = function(photos,currentState){
     const slidBottom =document.createElement('div');
     slidBottom.style.gridArea = "dots";
     slidBottom.style.justifySelf = "center";
+
+    const dots = [];
     photos.forEach((photo, index)=>{
         const dot = document.createElement('div');
+;
         dot.innerText = "o";
         dot.style.display= "inline";
         dot.style.padding = "10px";
+
+        slidBottom.appendChild(dot);
+        dots.push(dot);
 
         dot.addEventListener('mouseover', ()=>{
             dot.innerText = "O";
@@ -51,37 +75,46 @@ const dotSelector = function(photos){
             dot.innerText = "o";
         });
         dot.addEventListener('click',()=>{
-            showImg(photos, index);
+            currentState.index = index
+            showImgs(photos, index, dots);
+
+
         })
-        
-        slidBottom.appendChild(dot);
     })
-    return slidBottom
-}
-const AutoSlider= function (photos,selected){
-    if(selected == undefined){
-        selected = 0;
-    }
+    return {dotContainer:slidBottom, dots:dots};
+};
+
+const AutoSlider= function (photos,currentState, dots){
+
     setInterval(()=>{
-        selected = (selected + 1) %photos.length;
-        showImg(photos, selected);
-    }, 5000);
-}
-
-const showImg = function (photos, selected){
-
-    console.log(photos);
+        currentState.index = (currentState.index + 1) % photos.length;
+        showImgs(photos, currentState.index , dots);
+    }, 10000);
+};
+const showImgs = function (photos, selected, dots){
     photos.forEach((p, index) =>{
         p.style.display = "none"
         if(index === selected){
-            console.log(p);
-            p.style.display = "block";
-            p.style.justifySelf = "center";
-            p.style.marginTop = "30%";
-        }
-    })
+            showImg(p);
 
-}
+        }
+    });
+    if(dots){
+        dots.forEach((dot, index)=>{
+            dot.innerText = index === selected ? "O" : "o";
+        });
+    }
+    
+};
+const showImg = function (photo){
+
+    photo.style.display = "block";
+    photo.style.justifySelf = "center";
+    photo.style.marginTop = "30%";
+    
+
+
+};
 export{
     sliderElement,
 

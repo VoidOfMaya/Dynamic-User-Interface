@@ -8,6 +8,8 @@ const carousel = function (){
     const slid = document.createElement('div');
     
     slid.id = "slider-preview";
+    arrowA.id = "arrow-A";
+    arrowB.id = "arrow-B";
 
     container.style.height = "100%";
     container.style.backgroundColor = "gray";
@@ -31,12 +33,15 @@ const carousel = function (){
     arrowB.style.alignContent = "center";
 
     
-    sliderElement(slid);
+
 
     container.appendChild(slid);
     container.appendChild(arrowA);
     container.appendChild(arrowB);
 
+
+    sliderElement(slid);
+   
     return container;
 }
 
